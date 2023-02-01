@@ -41,8 +41,11 @@ const start = () => {
       return bot.sendMessage(chatId, `Напишите в сообщении название вашей группы(Заглавными буквами) и выберите день`)
     }
     if(Group[text]){
-      gruppa = Group[text]
-      return bot.sendMessage(chatId, `Выберете день недели`, Weekoptions)
+      try{
+        gruppa = Group[text]
+        return bot.sendMessage(chatId, `Выберете день недели`, Weekoptions);
+      }catch(err){
+        console.log(err)}
     }
     if(!Group[text]){
       return bot.sendMessage(chatId, `Группа не найдена, проверьте корректно ли указано название, пример - АТ-43-22`)
@@ -71,6 +74,35 @@ const start = () => {
     }
     //чистим от пробелов
 
+    function DurationOfThePair(time){
+      let curtime = time
+      let minute;
+      let hour;
+      let endtime;
+      if(curtime.length === 5){
+        hour = curtime[0] + curtime[1];
+        minute = curtime[3] + curtime[4];
+      }
+      else{
+        hour = curtime[0];
+        minute = curtime[2] + curtime[3];
+      };
+      let NumberMinute = Number(minute) + 30;
+      let NumberHour = Number(hour);
+      if(NumberMinute>=60){
+        NumberHour = NumberHour + 1;
+        NumberMinute = NumberMinute - 60;
+      }
+      if(NumberMinute === 0 || NumberMinute === 5){
+        minute = `0` + String(NumberMinute);
+        endtime = NumberHour + `:` + minute;
+      }
+      else{
+        endtime = NumberHour + ":" + NumberMinute;
+      }
+      return endtime;
+    }
+
     let divDAY = data * 2
     let h2DAY = divDAY - 1
     let arraypara = []
@@ -88,6 +120,7 @@ const start = () => {
       for(let k = 2; k < 6; k++){
         //запрашиваем каждый элемент предмета - номер пары, кто ведёт, что ведёт и когда
         let paraDAY = $(`div:nth-child(${divDAY}) > table > tbody > tr:nth-child(${i}) > td:nth-child(${k})`, html).text();
+        k === 2 ? para = para + normalizeWS(paraDAY) + ` - ` + DurationOfThePair(normalizeWS(paraDAY)) + `\n` : 
         k === 5 ? para = para + `\n` + normalizeWS(paraDAY) + `\n` : para = para + normalizeWS(paraDAY) + ` `;
         // переносим имя препода на новую строку
 

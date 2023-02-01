@@ -6,7 +6,7 @@ module.exports = {
                 [{text: 'Вторник', callback_data: '2'}],
                 [{text: 'Среда', callback_data: '3'}],
                 [{text: 'Четверг', callback_data: '4'}],
-                [{text: 'Пятника', callback_data: '5'}]
+                [{text: 'Пятница', callback_data: '5'}]
             ]
         })
     },
