@@ -11,14 +11,14 @@ const bot = new TelegramAPI(process.env.TOKEN,{polling: true})
 
 //let day = 3; //указываем день
 //let gruppa = 'АТ-43-22' //указываем группу для которой нужно узнать рассписание
-let gruppa
-
-//let url = Group[grupa]
+let gruppa = {}
+let CurrentTask = {}
 
 const start = () => {
   bot.setMyCommands([
     {command: '/start', description: "Приветствие"},
     {command: '/info', description: "Инфа о боте"},
+    {command: '/schedule', description: "Переход в режим поиска расписания"},
   ])
 
   console.log('Bot is ready!')
@@ -33,26 +33,37 @@ const start = () => {
     const text = msg.text;
     const chatId = msg.chat.id;
     const msgid = msg.message_id;
+    //CurrentTask[chatId] = 0
 
-    if(text === '/start'){
-      return bot.sendMessage(chatId, `Данный бот выдаёт расписание вашей группы и конкретного дня`)
+    if(text === '/start' & CurrentTask[chatId] == null){
+      return bot.sendMessage(chatId, `Данный бот выдаёт расписание вашей группы`)
     }
-    if(text === '/info'){
+    if(text === '/info' & CurrentTask[chatId] == null){
       return bot.sendMessage(chatId, `Напишите в сообщении название вашей группы(Заглавными буквами) и выберите день`)
     }
-    if(Group[text]){
+    if (text === `/schedule` & CurrentTask[chatId] == null) {
+      bot.sendMessage(chatId, `Напишите номер группы или напишите "Отмена" для отмены поиска`);
+      CurrentTask[chatId] = 1;
+      return;
+    }
+    if (text.toLocaleLowerCase() === 'отмена' & CurrentTask[chatId] != null) {
+      bot.sendMessage(chatId, 'Отмена поиска');
+      CurrentTask[chatId] = null;
+    }
+    if(Group[text] != undefined & CurrentTask[chatId] == 1){
       try{
-        gruppa = Group[text]
+        gruppa[chatId] = Group[text]
         return bot.sendMessage(chatId, `Выберете день недели`, Weekoptions);
       }catch(err){
-        console.log(err)}
+        console.log(err)
+      }
     }
-    if(!Group[text]){
-      return bot.sendMessage(chatId, `Группа не найдена, проверьте корректно ли указано название, пример - АТ-43-22`)
+    if(Group[text] == undefined & CurrentTask[chatId] == 1){
+      return bot.sendMessage(chatId, `Группа не найдена, проверьте корректно ли указано название, пример - ОП-13-37`)
     }
-    else{
+/*     else{
       bot.sendMessage(chatId, 'Я не совсем понял что ты хочешь от меня')
-    }
+    } */
   })
   bot.on('callback_query', async msg =>{
     const data = msg.data;
@@ -63,7 +74,7 @@ const start = () => {
       console.error('Undefined is not a valid uri or options object.')
     }
  */
-    rp(gruppa)
+    rp(gruppa[chatId])
     .then(function(html){
       //Получилось!
     const $ = Cheerio.load(html)
