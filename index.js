@@ -74,7 +74,10 @@ const start = () => {
       console.error('Undefined is not a valid uri or options object.')
     }
  */
-    rp(gruppa[chatId])
+    try {
+      rp(gruppa[chatId])
+
+    //rp(gruppa[chatId])
     .then(function(html){
       //Получилось!
     const $ = Cheerio.load(html)
@@ -155,11 +158,11 @@ const start = () => {
       // tr - регулирует номер пары по порядку
       // div - отвечает за день и должен быть чётным начиная с 2
 
-    })
-    .catch(function(err){
-      console.log(err)
-      //ошибка
-    });
+    })}
+    catch(error){
+      bot.sendMessage(chatId, 'Пожалуйста, не используйте старый запрос расписания')
+
+    }
 
   });
   bot.on('error',()=>{
