@@ -1,3 +1,4 @@
 /node_modules
 .ENV
+nodemon.json
 /testing_new_ideas

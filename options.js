@@ -13,29 +13,29 @@ module.exports = {
     LowwerKeyboard: {
         reply_markup: JSON.stringify({
             keyboard: [
-                ['Рассписание','Преподователи']
+                ['Рассписание','Преподаватели']
             ],
             resize_keyboard: true,
             one_time_keyboard: true,
             //force_reply: true,
         })
     },
-    TeacherList:{
+    TeacherListKeyboard:{
         reply_markup: JSON.stringify({
             inline_keyboard:[
-                [{text: 'ghtgh', callback_data: '6'}],
-                [{text: 'ghtgh', callback_data: '7'}],
-                [{text: 'ghtgh', callback_data: '8'}],
-                [{text: 'ghtgh', callback_data: '9'}],
-                [{text: 'ghtgh', callback_data: '10'}],
-                [{text: 'ghtgh', callback_data: '11'}],
-                [{text: 'ghtgh', callback_data: '12'}],
-                [{text: 'ghtgh', callback_data: '13'}],
-                [{text: 'ghtgh', callback_data: '14'}],
-                [{text: 'ghtgh', callback_data: '15'}],
-                [{text: 'ghtgh', callback_data: '16'}],
-                [{text: 'ghtgh', callback_data: '17'}],
-                [{text: 'ghtgh', callback_data: '18'}],
+                [{text: 'МИХАЙЛОВА ГАЛИНА ВАЛЕНТИНОВНА', callback_data: 'МИХАЙЛОВА ГАЛИНА ВАЛЕНТИНОВНА'}],
+                [{text: 'ШМАТКОВ СЕРГЕЙ АНАТОЛЬЕВИЧ', callback_data: 'ШМАТКОВ СЕРГЕЙ АНАТОЛЬЕВИЧ'}],
+                [{text: 'БАШУКОВА ЛАРИСА ВАЛЕРЬЕВНА', callback_data: 'БАШУКОВА ЛАРИСА ВАЛЕРЬЕВНА'}],
+                [{text: 'ГЕТАЛОВА ВИКТОРИЯ ВИТАЛЬЕВНА', callback_data: 'ГЕТАЛОВА ВИКТОРИЯ ВИТАЛЬЕВНА'}],
+                [{text: 'КОЗЛОВА МАРИНА ЮРЬЕВНА', callback_data: 'КОЗЛОВА МАРИНА ЮРЬЕВНА'}],
+                [{text: 'ВОЛОКИТИН СЕРГЕЙ ВИКТОРОВИЧ', callback_data: 'ВОЛОКИТИН СЕРГЕЙ ВИКТОРОВИЧ'}],
+                [{text: 'КУЛЕШ АЛЬБИНА ФЛЮРОВНА', callback_data: 'КУЛЕШ АЛЬБИНА ФЛЮРОВНА'}],
+                [{text: 'СИМОНОВА ТАТЬЯНА ВАСИЛЬЕВНА', callback_data: 'СИМОНОВА ТАТЬЯНА ВАСИЛЬЕВНА'}],
+                [{text: 'ГРИШИНА СВЕТЛАНА АНАТОЛЬЕВНА', callback_data: 'ГРИШИНА СВЕТЛАНА АНАТОЛЬЕВНА'}],
+                [{text: 'АХМЕТЗЯНОВА ЕЛЕНА МИХАЙЛОВНА', callback_data: 'АХМЕТЗЯНОВА ЕЛЕНА МИХАЙЛОВНА'}],
+                [{text: 'СИДОРОВА ВЕРА ВЛАДИМИРОВНА', callback_data: 'СИДОРОВА ВЕРА ВЛАДИМИРОВНА'}],
+                [{text: 'БОБРОВСКИХ ЕВГЕНИЙ ВИКТОРОВИЧ', callback_data: 'БОБРОВСКИХ ЕВГЕНИЙ ВИКТОРОВИЧ'}],
+                [{text: 'ВЕРХОТУРЦЕВ ВЯЧЕСЛАВ СЕРГЕЕВИЧ', callback_data: 'ВЕРХОТУРЦЕВ ВЯЧЕСЛАВ СЕРГЕЕВИЧ'}],
             ]
         })
     }
