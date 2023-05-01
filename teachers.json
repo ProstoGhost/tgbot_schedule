@@ -1,0 +1,56 @@
+{
+    "teacher":[
+        {
+            "name": "МИХАЙЛОВА ГАЛИНА ВАЛЕНТИНОВНА",
+            "email": "college@nv-pk.ru"
+        },
+        {
+            "name": "ШМАТКОВ СЕРГЕЙ АНАТОЛЬЕВИЧ",
+            "email": "upr@nv-pk.ru"
+        },
+        {
+            "name": "БАШУКОВА ЛАРИСА ВАЛЕРЬЕВНА",
+            "email": "nmr@nv-pk.ru"
+        },
+        {
+            "name":"ГЕТАЛОВА ВИКТОРИЯ ВИТАЛЬЕВНА",
+            "email": "ur@nv-pk.ru"
+        },
+        {
+            "name": "КОЗЛОВА МАРИНА ЮРЬЕВНА",
+            "email": "uvr@nv-pk.ru"
+        },
+        {
+            "name": "ВОЛОКИТИН СЕРГЕЙ ВИКТОРОВИЧ",
+            "email": "marketing@nv-pk.ru"
+        },
+        {
+            "name": "КУЛЕШ АЛЬБИНА ФЛЮРОВНА",
+            "email": "ah4@nv-pk.ru"
+        },
+        {
+            "name": "СИМОНОВА ТАТЬЯНА ВАСИЛЬЕВНА",
+            "email": "buhgalter@nv-pk.ru"
+        },
+        {
+            "name": "ГРИШИНА СВЕТЛАНА АНАТОЛЬЕВНА",
+            "email": "spo@nv-pk.ru"
+        },
+        {
+            "name": "АХМЕТЗЯНОВА ЕЛЕНА МИХАЙЛОВНА",
+            "email": "autoschool@nv-pk.ru"
+        },
+        {
+            "name": "СИДОРОВА ВЕРА ВЛАДИМИРОВНА",
+            "email": "mo_it@nv-pk.ru"
+        },
+        {
+            "name": "БОБРОВСКИХ ЕВГЕНИЙ ВИКТОРОВИЧ",
+            "email": "st_master@nv-pk.ru"
+        },
+        {
+            "name": "ВЕРХОТУРЦЕВ ВЯЧЕСЛАВ СЕРГЕЕВИЧ",
+            "email": "praktika@nv-pk.ru"
+        }
+    ]
+}

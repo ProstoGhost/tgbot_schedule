@@ -5,6 +5,7 @@ const TelegramAPI = require('node-telegram-bot-api');
 
 const Group = require('./schedule.json');
 const TeacherList = require('./SYLKI.json');
+const Teacherarray = require('./teachers.json');
 const {Weekoptions, LowwerKeyboard, TeacherListKeyboard} = require('./options')
 
 
@@ -36,34 +37,91 @@ const start = () => {
     const msgid = msg.message_id;
     //CurrentTask[chatId] = 0
 
-    if(text === '/start' & CurrentTask[chatId] == null){
-      return bot.sendMessage(chatId, `Данный бот выдаёт расписание групп и почт преподавателей`, LowwerKeyboard)
+    function cancel(chatId) {
+      CurrentTask[chatId] = null
+      bot.sendMessage(chatId, 'отмена поиска', LowwerKeyboard)
     }
-    if(text === '/info' & CurrentTask[chatId] == null){
-      return bot.sendMessage(chatId, `Напишите в сообщении название вашей группы(Заглавными буквами) и выберите день`)
+
+    switch (CurrentTask[chatId]) {
+      case 1:
+
+        switch(text){
+          case 'отмена':
+            cancel(chatId);
+            break;
+        }
+
+        switch(Group[text.toLocaleUpperCase()]){
+
+          case undefined:
+            if (text == 'отмена') {
+              break;
+            }
+            bot.sendMessage(chatId, `Группа не найдена, проверьте корректно ли указано название, пример - ОП-13-37`)
+            break;
+
+          default:
+            gruppa[chatId] = Group[text.toLocaleUpperCase()]
+            bot.sendMessage(chatId, `Выберете день недели`, Weekoptions);
+            break;
+
+        }
+
+        break;
+      case 2:
+
+        switch(text){
+          case 'отмена':
+            cancel(chatId);
+            break;
+        }
+        
+        break;
+      default:
+
+        switch(text){
+
+          case '/start':
+            bot.sendMessage(chatId, `Данный бот выдаёт расписание групп и почт преподавателей`, LowwerKeyboard)
+
+            break;
+
+          case '/info':
+            bot.sendMessage(chatId, `Напишите в сообщении название вашей группы(Заглавными буквами) и выберите день`)
+            
+            break;
+          case '/schedule':
+          case 'рассписание':
+            bot.sendMessage(chatId, `Напишите номер группы или "Отмена" для возврата в главное меню`);
+            CurrentTask[chatId] = 1;
+            break;
+          
+          case '/teacher':
+          case 'преподаватели':
+            let TestTeacherKeyboard = {
+              reply_markup: JSON.stringify({
+                inline_keyboard: Teacherarray.teacher.map(e => [{text: e.name, callback_data: e.name}]),
+                parse_mode: 'Markdown'
+              })
+            }
+            bot.sendMessage(chatId, `Выберите преподователя чтобы узнать его почту
+            или напишите "Отмена" для возврата в главное меню`, TestTeacherKeyboard);
+            CurrentTask[chatId] = 2;
+            break;
+
+            case 'отмена':
+              //bot.sendMessage(chatId, 'Отмена поиска', LowwerKeyboard);
+              //CurrentTask[chatId] = null;
+              cancel(chatId)
+              break;
+        }
+
+        break;
     }
-    if ((text === `/schedule`|| text === `рассписание`) & CurrentTask[chatId] == null) {
-      bot.sendMessage(chatId, `Напишите номер группы или "Отмена" для возврата в главное меню`);
-      CurrentTask[chatId] = 1;
-      return;
-    }
-    if ((text === `/teacher`|| text === `преподаватели`) & CurrentTask[chatId] == null) {
-      bot.sendMessage(chatId, `Выберите преподователя чтобы узнать его почту
-        или напишите "Отмена" для возврата в главное меню`, TeacherListKeyboard);
-      CurrentTask[chatId] = 2;
-      return;
-    }
-    if (text === 'отмена' & CurrentTask[chatId] != null) {
-      bot.sendMessage(chatId, 'Отмена поиска', LowwerKeyboard);
-      CurrentTask[chatId] = null;
-    }
-    if(Group[text.toLocaleUpperCase()] != undefined & CurrentTask[chatId] == 1){
-      gruppa[chatId] = Group[text.toLocaleUpperCase()]
-      return bot.sendMessage(chatId, `Выберете день недели`, Weekoptions);
-    }
-    if(Group[text] == undefined & CurrentTask[chatId] == 1){
-      return bot.sendMessage(chatId, `Группа не найдена, проверьте корректно ли указано название, пример - ОП-13-37`)
-    }
+/*     if(text === '/dev'){
+      CurrentTask[chatId] = 1
+      bot.sendMessage(chatId, 'dev change complete')
+    } */
   })
   bot.on('callback_query', async msg =>{
     const data = msg.data;
@@ -73,7 +131,7 @@ const start = () => {
     if(data.match(/[А-Я]/g)){
       try {
         Teacher[chatId] = TeacherList[data];
-        CurrentTask[chatId] = null;
+        CurrentTask[chatId] = null
         return bot.sendMessage(chatId, `Преподаватель - ${data}\nПочта - ${Teacher[chatId]}`)
       } catch (error) {
         console.log(`Ошибка запроса Препода`)
