@@ -39,32 +39,6 @@ const start = () => {
     if(text === '/start' & CurrentTask[chatId] == null){
       return bot.sendMessage(chatId, `Данный бот выдаёт расписание групп и почт преподавателей`, LowwerKeyboard)
     }
-<<<<<<< HEAD
-    if(text === '/info' & CurrentTask[chatId] == null){
-      return bot.sendMessage(chatId, `Напишите в сообщении название вашей группы(Заглавными буквами) и выберите день`)
-    }
-    if ((text === `/schedule`|| text === `рассписание`) & CurrentTask[chatId] == null) {
-      bot.sendMessage(chatId, `Напишите номер группы или "Отмена" для возврата в главное меню`);
-      CurrentTask[chatId] = 1;
-      return;
-    }
-    if ((text === `/teacher`|| text === `преподаватели`) & CurrentTask[chatId] == null) {
-      bot.sendMessage(chatId, `Выберите преподователя чтобы узнать его почту
-        или напишите "Отмена" для возврата в главное меню`, TeacherListKeyboard);
-      CurrentTask[chatId] = 2;
-      return;
-    }
-    if (text === 'отмена' & CurrentTask[chatId] != null) {
-      bot.sendMessage(chatId, 'Отмена поиска', LowwerKeyboard);
-      CurrentTask[chatId] = null;
-    }
-    if(Group[text.toLocaleUpperCase()] != undefined & CurrentTask[chatId] == 1){
-      gruppa[chatId] = Group[text.toLocaleUpperCase()]
-      return bot.sendMessage(chatId, `Выберете день недели`, Weekoptions);
-    }
-    if(Group[text] == undefined & CurrentTask[chatId] == 1){
-      return bot.sendMessage(chatId, `Группа не найдена, проверьте корректно ли указано название, пример - ОП-13-37`)
-=======
 
     switch (CurrentTask[chatId]) {
       case 1: 
@@ -143,7 +117,6 @@ const start = () => {
         }
 
         break;
->>>>>>> 65c1708 (optimizing command recognition and preparing for patch 2.0)
     }
   })
   bot.on('callback_query', async msg =>{
