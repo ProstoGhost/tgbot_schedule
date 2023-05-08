@@ -36,14 +36,9 @@ const start = () => {
     const msgid = msg.message_id;
     //CurrentTask[chatId] = 0
 
-    if(text === '/start' & CurrentTask[chatId] == null){
-      return bot.sendMessage(chatId, `Данный бот выдаёт расписание групп и почт преподавателей`, LowwerKeyboard)
-    }
 
     switch (CurrentTask[chatId]) {
       case 1: 
-
-      //test git moment
 
         switch(text){
           case 'отмена':
