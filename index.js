@@ -36,6 +36,7 @@ const start = () => {
     const chatId = msg.chat.id;
     const msgid = msg.message_id;
     //CurrentTask[chatId] = 0
+    //hehe
 
     function cancel(chatId) {
       CurrentTask[chatId] = null
