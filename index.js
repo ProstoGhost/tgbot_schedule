@@ -5,6 +5,7 @@ const TelegramAPI = require('node-telegram-bot-api');
 
 const Group = require('./schedule.json');
 const TeacherList = require('./SYLKI.json');
+const Teacherarray = require('./teachers.json');
 const {Weekoptions, LowwerKeyboard, TeacherListKeyboard} = require('./options')
 
 
@@ -36,6 +37,10 @@ const start = () => {
     const msgid = msg.message_id;
     //CurrentTask[chatId] = 0
 
+    function cancel(chatId) {
+      CurrentTask[chatId] = null
+      bot.sendMessage(chatId, 'отмена поиска', LowwerKeyboard)
+    }
 
     switch (CurrentTask[chatId]) {
       case 1: 
@@ -113,6 +118,10 @@ const start = () => {
 
         break;
     }
+/*     if(text === '/dev'){
+      CurrentTask[chatId] = 1
+      bot.sendMessage(chatId, 'dev change complete')
+    } */
   })
   bot.on('callback_query', async msg =>{
     const data = msg.data;
@@ -122,7 +131,7 @@ const start = () => {
     if(data.match(/[А-Я]/g)){
       try {
         Teacher[chatId] = TeacherList[data];
-        CurrentTask[chatId] = null;
+        CurrentTask[chatId] = null
         return bot.sendMessage(chatId, `Преподаватель - ${data}\nПочта - ${Teacher[chatId]}`)
       } catch (error) {
         console.log(`Ошибка запроса Препода`)
