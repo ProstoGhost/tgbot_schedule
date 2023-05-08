@@ -39,6 +39,7 @@ const start = () => {
     if(text === '/start' & CurrentTask[chatId] == null){
       return bot.sendMessage(chatId, `Данный бот выдаёт расписание групп и почт преподавателей`, LowwerKeyboard)
     }
+<<<<<<< HEAD
     if(text === '/info' & CurrentTask[chatId] == null){
       return bot.sendMessage(chatId, `Напишите в сообщении название вашей группы(Заглавными буквами) и выберите день`)
     }
@@ -63,6 +64,86 @@ const start = () => {
     }
     if(Group[text] == undefined & CurrentTask[chatId] == 1){
       return bot.sendMessage(chatId, `Группа не найдена, проверьте корректно ли указано название, пример - ОП-13-37`)
+=======
+
+    switch (CurrentTask[chatId]) {
+      case 1: 
+
+      //test git moment
+
+        switch(text){
+          case 'отмена':
+            cancel(chatId);
+            break;
+        }
+
+        switch(Group[text.toLocaleUpperCase()]){
+
+          case undefined:
+            if (text == 'отмена') {
+              break;
+            }
+            bot.sendMessage(chatId, `Группа не найдена, проверьте корректно ли указано название, пример - ОП-13-37`)
+            break;
+
+          default:
+            gruppa[chatId] = Group[text.toLocaleUpperCase()]
+            bot.sendMessage(chatId, `Выберете день недели`, Weekoptions);
+            break;
+
+        }
+
+        break;
+      case 2:
+
+        switch(text){
+          case 'отмена':
+            cancel(chatId);
+            break;
+        }
+        
+        break;
+      default:
+
+        switch(text){
+
+          case '/start':
+            bot.sendMessage(chatId, `Данный бот выдаёт расписание групп и почт преподавателей`, LowwerKeyboard)
+
+            break;
+
+          case '/info':
+            bot.sendMessage(chatId, `Напишите в сообщении название вашей группы(Заглавными буквами) и выберите день`)
+            
+            break;
+          case '/schedule':
+          case 'рассписание':
+            bot.sendMessage(chatId, `Напишите номер группы или "Отмена" для возврата в главное меню`);
+            CurrentTask[chatId] = 1;
+            break;
+          
+          case '/teacher':
+          case 'преподаватели':
+            let TestTeacherKeyboard = {
+              reply_markup: JSON.stringify({
+                inline_keyboard: Teacherarray.teacher.map(e => [{text: e.name, callback_data: e.name}]),
+                parse_mode: 'Markdown'
+              })
+            }
+            bot.sendMessage(chatId, `Выберите преподователя чтобы узнать его почту
+            или напишите "Отмена" для возврата в главное меню`, TestTeacherKeyboard);
+            CurrentTask[chatId] = 2;
+            break;
+
+            case 'отмена':
+              //bot.sendMessage(chatId, 'Отмена поиска', LowwerKeyboard);
+              //CurrentTask[chatId] = null;
+              cancel(chatId)
+              break;
+        }
+
+        break;
+>>>>>>> 65c1708 (optimizing command recognition and preparing for patch 2.0)
     }
   })
   bot.on('callback_query', async msg =>{
