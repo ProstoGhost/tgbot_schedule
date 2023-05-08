@@ -46,8 +46,6 @@ const start = () => {
     switch (CurrentTask[chatId]) {
       case 1: 
 
-      //test git moment
-
         switch(text){
           case 'отмена':
             cancel(chatId);
