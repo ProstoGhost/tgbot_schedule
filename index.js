@@ -45,6 +45,8 @@ const start = () => {
     switch (CurrentTask[chatId]) {
       case 1: 
 
+//fix minor bugs 
+
         switch(text){
           case 'отмена':
             cancel(chatId);
