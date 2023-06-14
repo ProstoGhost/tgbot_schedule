@@ -6,7 +6,8 @@ const TelegramAPI = require('node-telegram-bot-api');
 const Group = require('./schedule.json');
 const TeacherList = require('./SYLKI.json');
 const Teacherarray = require('./teachers.json');
-const {Weekoptions, LowwerKeyboard, TeacherListKeyboard} = require('./options')
+const Characters = require('./CharactersBOT.json');
+const {Weekoptions, LowwerKeyboard} = require('./options');
 
 
 const bot = new TelegramAPI(process.env.TOKEN,{polling: true})
@@ -14,6 +15,7 @@ const bot = new TelegramAPI(process.env.TOKEN,{polling: true})
 let Teacher = {} // поиск учителя в базе
 let gruppa = {} //указываем группу для которой нужно узнать рассписание
 let CurrentTask = {} // переменная для понимания какую задачу выполнять программе
+let CurrentCharacter = {} // переменная для хранения настроения бота под каждого пользователя
 
 const start = () => {
   bot.setMyCommands([
@@ -35,8 +37,7 @@ const start = () => {
     const text = msg.text.toLocaleLowerCase()
     const chatId = msg.chat.id;
     const msgid = msg.message_id;
-    //CurrentTask[chatId] = 0
-    //hehe
+    CurrentCharacter[chatId] = 1;
 
     function cancel(chatId) {
       CurrentTask[chatId] = null
@@ -88,7 +89,7 @@ const start = () => {
             break;
 
           case '/info':
-            bot.sendMessage(chatId, `Напишите в сообщении название вашей группы(Заглавными буквами) и выберите день`)
+            bot.sendMessage(chatId, Characters.characters[CurrentCharacter[chatId]].phrases[0].info)
             
             break;
           case '/schedule':
@@ -106,9 +107,13 @@ const start = () => {
               })
             }
             bot.sendMessage(chatId, `Выберите преподователя чтобы узнать его почту
-            или напишите "Отмена" для возврата в главное меню`, TestTeacherKeyboard);
+или напишите "Отмена" для возврата в главное меню`, TestTeacherKeyboard);
             CurrentTask[chatId] = 2;
-            break;
+              break;
+
+            case '/document':
+
+              break;
 
             case 'отмена':
               //bot.sendMessage(chatId, 'Отмена поиска', LowwerKeyboard);
@@ -213,15 +218,17 @@ const start = () => {
             schedule += arraypara[v] + `\n`
           }
           // преобразовываем массив в текст
-
-          bot.sendMessage(chatId, schedule, {parse_mode: 'HTML'}).then(
-            CurrentTask[chatId] = null
-          )
-
-          let array2 = $('div:nth-child(6) > table > tbody > tr:nth-child(1) > td', html).text()
-            // tr - регулирует номер пары по порядку
-            // div - отвечает за день и должен быть чётным начиная с 2
-
+          
+          if(schedule){
+            bot.sendMessage(chatId, `В этот день у группы нет занятий`);
+            return;
+          }
+          else{
+            //bot.sendMessage(chatId, schedule, {parse_mode: 'HTML'})
+            bot.sendMessage(chatId, schedule, {parse_mode: 'HTML'}).then(
+              CurrentTask[chatId] = null);
+              return;
+          }
         })
         .catch(function(err){
           console.log(err)
@@ -231,6 +238,7 @@ const start = () => {
         bot.sendMessage(chatId, 'Пожалуйста, не используйте старый запрос расписания')
       }
     }
+    if(data.startsWith()){}
     });
     
   bot.on('error',()=>{
